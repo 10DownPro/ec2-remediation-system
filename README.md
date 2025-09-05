@@ -26,7 +26,10 @@ The **EC2 Remediation System** integrates AWS health monitoring, ServiceNow work
    - Creates a **ServiceNow Incident**.  
 4. DevOps can open the EC2 record & hit the **Trigger EC2 Remediation** button.  
 5. The **Script Include** calls AWS Integration Server via REST API.  
-6. All actions are logged in the **Remediation Log** for audit trails.  
+6. All actions are logged in the **Remediation Log** for audit trails.
+
+<img width="1239" height="589" alt="Screenshot 2025-09-04 at 9 59 04 PM" src="https://github.com/user-attachments/assets/3cf6ba12-bc28-45ad-a3cd-443d698e0f05" />
+
 
 ---
 
