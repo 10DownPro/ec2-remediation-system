@@ -30,6 +30,21 @@ The **EC2 Remediation System** integrates AWS health monitoring, ServiceNow work
 
 <img width="1239" height="589" alt="Screenshot 2025-09-04 at 9 59 04 PM" src="https://github.com/user-attachments/assets/3cf6ba12-bc28-45ad-a3cd-443d698e0f05" />
 
+Tables 
+
+<img width="1239" height="585" alt="Screenshot 2025-09-04 at 10 01 01 PM" src="https://github.com/user-attachments/assets/b3b59d16-ec19-424f-a18a-c94d0d2e1b77" />
+
+<img width="1240" height="583" alt="Screenshot 2025-09-04 at 10 01 28 PM" src="https://github.com/user-attachments/assets/3ab49854-7b9a-4f25-b856-44b25e2374bc" />
+
+<img width="1238" height="606" alt="Screenshot 2025-09-04 at 10 02 46 PM" src="https://github.com/user-attachments/assets/0855ce7a-47cb-42bb-96c1-486910df9a88" />
+
+<img width="1237" height="602" alt="Screenshot 2025-09-04 at 10 03 47 PM" src="https://github.com/user-attachments/assets/28ca1870-5d91-42f4-8d80-715104e375a3" />
+
+<img width="982" height="597" alt="Screenshot 2025-09-04 at 10 05 12 PM" src="https://github.com/user-attachments/assets/dad57f42-4247-43c7-8b81-443d945ca38a" />
+
+<img width="985" height="559" alt="Screenshot 2025-09-04 at 10 05 47 PM" src="https://github.com/user-attachments/assets/4c489319-5e9c-4714-8a16-018938510b0c" />
+
+<img width="999" height="315" alt="Screenshot 2025-09-04 at 10 23 38 PM" src="https://github.com/user-attachments/assets/a0cc04ec-08ec-40cd-b96b-fc210fc2bef7" />
 
 ---
 
