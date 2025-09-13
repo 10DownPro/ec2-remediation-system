@@ -83,3 +83,9 @@ All logic is packaged in a scoped app for portability, testing, and future upgra
 <img width="795" height="383" alt="Screenshot 2025-09-13 at 12 22 27 AM" src="https://github.com/user-attachments/assets/9bc36b00-5e1b-4123-820e-95e96d63dc5a" />
 
 ---
+
+### Workflow Diagram
+
+Here’s the full workflow at a glance:
+
+<img width="810" height="505" alt="Screenshot 2025-09-13 at 12 25 25 AM" src="https://github.com/user-attachments/assets/c2a26958-089a-4f61-b052-8827b6b86207" />
