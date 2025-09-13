@@ -1,115 +1,85 @@
-# EC2 Remediation System (ServiceNow + AWS + Slack + AI Search)
+# ⚙️ EC2 Remediation System (ServiceNow + AWS)
 
-## 📖 Project Story  
-Last week, Netflix faced a critical issue: an AWS EC2 instance in the **US-East region** failed during peak streaming hours. The monitoring system wasn’t integrated with ServiceNow, so the outage went undetected for 45 minutes. That gap meant **millions of subscribers experienced buffering**, complaints poured in, and Twitter/X lit up with criticism.  
-
-As a **ServiceNow Admin & Jr Developer at Netflix**, I was tasked with building a solution that DevOps could trust. The goal was clear:  
-- Detect failing EC2 instances immediately.  
-- Give engineers instant remediation guidance without hunting docs.  
-- Notify teams in Slack where they live.  
-- Enable **one-click remediation** directly from ServiceNow.  
-- Keep a complete **audit log** for compliance & post-mortems.  
-
-This project turned a painful incident into an opportunity to prove how ServiceNow, AWS, Slack, & AI could work together to protect streaming quality for over **260 million subscribers worldwide**.
+A scoped ServiceNow app that monitors EC2 instance health, automates incident response, and enables one-click remediation via AWS REST API. Designed to cut down on manual steps, reduce downtime, and streamline DevOps workflows.
 
 ---
 
-## ⚙️ System Overview  
-The **EC2 Remediation System** integrates AWS health monitoring, ServiceNow workflows, and Slack notifications to enable fast, semi-automated incident response.  
+## 🧠 Why This Matters
 
-**Core Flow:**  
-1. **AWS Integration Server** pushes EC2 instance health into ServiceNow every minute.  
-2. If an instance flips to `OFF`, a **Flow Designer workflow** is triggered.  
-3. The workflow:  
-   - Runs **AI Search** to surface remediation runbooks.  
-   - Sends a **Slack alert** to DevOps with KB links.  
-   - Creates a **ServiceNow Incident**.  
-4. DevOps can open the EC2 record & hit the **Trigger EC2 Remediation** button.  
-5. The **Script Include** calls AWS Integration Server via REST API.  
-6. All actions are logged in the **Remediation Log** for audit trails.
-
-<img width="1239" height="589" alt="Screenshot 2025-09-04 at 9 59 04 PM" src="https://github.com/user-attachments/assets/3cf6ba12-bc28-45ad-a3cd-443d698e0f05" />
-
-Tables 
-
-<img width="1239" height="585" alt="Screenshot 2025-09-04 at 10 01 01 PM" src="https://github.com/user-attachments/assets/b3b59d16-ec19-424f-a18a-c94d0d2e1b77" />
-
-<img width="1240" height="583" alt="Screenshot 2025-09-04 at 10 01 28 PM" src="https://github.com/user-attachments/assets/3ab49854-7b9a-4f25-b856-44b25e2374bc" />
-
-<img width="1238" height="606" alt="Screenshot 2025-09-04 at 10 02 46 PM" src="https://github.com/user-attachments/assets/0855ce7a-47cb-42bb-96c1-486910df9a88" />
-
-<img width="1237" height="602" alt="Screenshot 2025-09-04 at 10 03 47 PM" src="https://github.com/user-attachments/assets/28ca1870-5d91-42f4-8d80-715104e375a3" />
-
-<img width="982" height="597" alt="Screenshot 2025-09-04 at 10 05 12 PM" src="https://github.com/user-attachments/assets/dad57f42-4247-43c7-8b81-443d945ca38a" />
-
-<img width="985" height="559" alt="Screenshot 2025-09-04 at 10 05 47 PM" src="https://github.com/user-attachments/assets/4c489319-5e9c-4714-8a16-018938510b0c" />
-
-<img width="999" height="315" alt="Screenshot 2025-09-04 at 10 23 38 PM" src="https://github.com/user-attachments/assets/a0cc04ec-08ec-40cd-b96b-fc210fc2bef7" />
+Manual cloud remediation wastes time. This app automates the entire response process—detect, alert, remediate—while logging every action for audit & compliance. It's fast, secure, and extendable.
 
 ---
 
-## 🏗️ Implementation Steps  
-- Built a scoped app: **EC2 Monitoring and Remediation**  
-- Created **two custom tables**: `EC2 Instance` & `Remediation Log`  
-- Configured **Connection & Credential Store** (alias, HTTP connection, basic auth)  
-- Developed a **Script Include** + **UI Action** for one-click remediation  
-- Designed a **Flow Designer workflow**: OFF → AI Search → Slack webhook → Incident  
-- Authored **Knowledge Base articles** (with EC2 keywords) for AI retrieval  
-- Applied **ACLs** to secure access for DevOps & admins  
-- Exported everything into an **update set** for version control  
+## 🔧 How It Works
+
+**Heartbeat:** AWS Integration Server polls EC2 instance status & pushes data to ServiceNow every 60 seconds.
+
+**When instance is `OFF`:**
+1. Flow triggers AI Search for KB recommendations
+2. Slack alert sent to DevOps team
+3. ServiceNow Incident is auto-created
+4. Dev clicks “Trigger EC2 Remediation” button
+5. Script Include sends remediation command to AWS
+6. Action is recorded in the Remediation Log table
 
 ---
 
-## 🗺️ Architecture Diagram  
-![Architecture Diagram](Diagram.png)  
+## 🧱 Core System Components
 
-*Flow: AWS EC2 → AWS Integration Server → ServiceNow EC2 Table → Flow Designer (AI Search + Slack + Incident) → DevOps remediation button → Script Include → AWS → Remediation Log*
+### 1. EC2 Instance Table  
+Tracks instance name, status, region, instance ID, and last check timestamp.
 
----
-
-## 🚀 DevOps Usage  
-1. Watch Slack for EC2 OFF alerts & quick KB links.  
-2. Open the linked Incident in ServiceNow.  
-3. Navigate to the EC2 Instance record.  
-4. Click **Trigger EC2 Remediation** → request sent to AWS Integration Server.  
-5. Check **Remediation Log** for success/failure details & response time.  
+![EC2 Instance Table](https://github.com/user-attachments/assets/b3b59d16-ec19-424f-a18a-c94d0d2e1b77)
 
 ---
 
-## 📊 Optimization Highlights  
-- **Force Save** in Flow Designer ensured every sub-artifact landed in the update set.  
-- Moved API credentials to **Connection & Credential Store** for security.  
-- Added **AI Search keywords** so KB retrieval was instant & relevant.  
-- Slack messages included **instance ID, name, & KB links** for immediate triage.  
+### 2. Remediation Log Table  
+Captures details of every remediation event (who triggered it, when, for which instance).
+
+![Remediation Log Table](https://github.com/user-attachments/assets/3ab49854-7b9a-4f25-b856-44b25e2374bc)
 
 ---
 
-## ✅ Evidence & Testing  
-- **EC2 Instance table** auto-populated with ON/OFF statuses  
-- **Remediation Log entries** created after button clicks  
-- **Incidents** auto-generated for OFF statuses  
-- **AI Search logs** verified KB retrieval  
-- **Slack notifications** successfully delivered (before webhook removed for repo security)  
+### 3. Script Include  
+Core logic that forms & sends REST requests to the AWS integration endpoint.
+
+![Script Include](https://github.com/user-attachments/assets/0855ce7a-47cb-42bb-96c1-486910df9a88)
+![Script Include](https://github.com/user-attachments/assets/28ca1870-5d91-42f4-8d80-715104e375a3)
 
 ---
 
-## 🔑 Interview Spotlight  
-This project demonstrates:  
-- **End-to-end systems thinking**: tied AWS, ServiceNow, Slack, & AI Search into one flow.  
-- **Business impact awareness**: solved a real problem that cost Netflix trust with users.  
-- **Hands-on ServiceNow expertise**: custom tables, flows, UI actions, script includes, ACLs.  
-- **Automation mindset**: reduced manual lookup/remediation time from 45 minutes to <5.  
+### 4. UI Action  
+“Trigger EC2 Remediation” button on the instance record form.
+
+<img width="1233" height="559" alt="Screenshot 2025-09-13 at 12 14 53 AM" src="https://github.com/user-attachments/assets/c8fbddda-44c4-4354-965f-f17ee07b037b" />
+<img width="1236" height="576" alt="Screenshot 2025-09-13 at 12 15 48 AM" src="https://github.com/user-attachments/assets/3409ff02-2cce-4e24-a63f-41b63f0a905c" />
+<img width="790" height="250" alt="Screenshot 2025-09-13 at 12 21 42 AM" src="https://github.com/user-attachments/assets/dc3d8e37-ff34-4ae1-83d9-7aeda6a42d02" />
+
+
 
 ---
 
-## 📂 Repository Structure  
+### 5. Flow Designer  
+Orchestrates the detection → alerting → ticket creation process.
 
-/ec2-remediation-system<br>
-├── README.md<br>
-├── ec2-remediation-system.xml # Update set export<br>
-└── Diagram.png # System architecture diagram
+<img width="1234" height="571" alt="Screenshot 2025-09-13 at 12 17 49 AM" src="https://github.com/user-attachments/assets/2ccf12ff-b590-49a3-8721-41c86ab67aec" />
+<img width="985" height="537" alt="Screenshot 2025-09-13 at 12 18 37 AM" src="https://github.com/user-attachments/assets/08d4972d-fd05-4d85-a611-56ff934ee869" />
+
+
 
 ---
 
-## 📌 Takeaway  
-This wasn’t just about fixing an outage. It was about **proving the value of automation** in protecting customer experience. With this system, Netflix’s DevOps team moved from **reactive firefighting** to **proactive, AI-assisted incident response**.  
+### 6. AI Search + KB Integration  
+AI Search uses keywords & tags to fetch relevant KBs for the error type.
+
+<img width="984" height="571" alt="Screenshot 2025-09-13 at 12 20 54 AM" src="https://github.com/user-attachments/assets/2add6c35-76ec-466b-bf64-92f6be29507a" />
+
+
+---
+
+### 7. Scoped App in Studio  
+All logic is packaged in a scoped app for portability, testing, and future upgrades.
+
+<img width="795" height="383" alt="Screenshot 2025-09-13 at 12 22 27 AM" src="https://github.com/user-attachments/assets/9bc36b00-5e1b-4123-820e-95e96d63dc5a" />
+
+---
